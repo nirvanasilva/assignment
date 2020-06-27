@@ -9,9 +9,9 @@ public class BinaryData {
 	@Id
 	private Long id;
 	
-	private byte[] left;
+	private byte[] leftData;
 	
-	private byte[] right;
+	private byte[] rightData;
 
 	public Long getId() {
 		return id;
@@ -21,19 +21,20 @@ public class BinaryData {
 		this.id = id;
 	}
 
-	public byte[] getLeft() {
-		return left;
+	public byte[] getLeftData() {
+		return leftData;
 	}
 
-	public void setLeft(byte[] left) {
-		this.left = left;
+	public void setLeftData(byte[] leftData) {
+		this.leftData = leftData;
 	}
 
-	public byte[] getRight() {
-		return right;
+	public byte[] getRightData() {
+		return rightData;
 	}
 
-	public void setRight(byte[] right) {
-		this.right = right;
+	public void setRightData(byte[] rightData) {
+		this.rightData = rightData;
 	}
+	
 }

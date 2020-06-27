@@ -56,7 +56,7 @@ public class BinaryDataServiceImplTest {
 		assertNotNull(result);
 		assertAll(
 			() -> assertEquals(expected.getId(), result.getId()),
-			() -> assertArrayEquals(expected.getLeft(), result.getLeft())
+			() -> assertArrayEquals(expected.getLeftData(), result.getLeftData())
 		);
 	}
 
@@ -72,7 +72,7 @@ public class BinaryDataServiceImplTest {
 		assertNotNull(result);
 		assertAll(
 			() -> assertEquals(expected.getId(), result.getId()),
-			() -> assertArrayEquals(expected.getLeft(), result.getLeft())
+			() -> assertArrayEquals(expected.getLeftData(), result.getLeftData())
 		);
 	}
 	
@@ -88,7 +88,7 @@ public class BinaryDataServiceImplTest {
 		assertNotNull(result);
 		assertAll(
 			() -> assertEquals(expected.getId(), result.getId()),
-			() -> assertArrayEquals(expected.getRight(), result.getRight())
+			() -> assertArrayEquals(expected.getRightData(), result.getRightData())
 		);
 	}
 	
@@ -104,7 +104,7 @@ public class BinaryDataServiceImplTest {
 		assertNotNull(result);
 		assertAll(
 			() -> assertEquals(expected.getId(), result.getId()),
-			() -> assertArrayEquals(expected.getRight(), result.getRight())
+			() -> assertArrayEquals(expected.getRightData(), result.getRightData())
 		);
 	}
 
@@ -117,8 +117,8 @@ public class BinaryDataServiceImplTest {
 	private BinaryData createBinaryData() {
 		BinaryData expected = new BinaryData();
 		expected.setId(SAMPLE_ID);
-		expected.setLeft(SAMPLE_DATA);
-		expected.setRight(SAMPLE_DATA);
+		expected.setLeftData(SAMPLE_DATA);
+		expected.setRightData(SAMPLE_DATA);
 		return expected;
 	}
 

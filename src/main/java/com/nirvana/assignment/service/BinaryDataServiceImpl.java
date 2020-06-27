@@ -20,14 +20,14 @@ public class BinaryDataServiceImpl implements BinaryDataService {
 	@Override
 	public BinaryData addLeftData(Long id, BinaryDataDTO inputData) {
 		BinaryData binaryData = findBinaryDataByIdOrCreateNew(id);
-		binaryData.setLeft(inputData.getData());
+		binaryData.setLeftData(inputData.getData());
 		return repository.save(binaryData);
 	}
 
 	@Override
 	public BinaryData addRightData(Long id, BinaryDataDTO inputData) {
 		BinaryData binaryData = findBinaryDataByIdOrCreateNew(id);
-		binaryData.setRight(inputData.getData());
+		binaryData.setRightData(inputData.getData());
 		return repository.save(binaryData);
 	}
 
