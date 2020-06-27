@@ -1,4 +1,4 @@
-package com.nirvana.assignment.service;
+package com.nirvana.assignment;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -18,10 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import com.nirvana.assignment.dto.BinaryDataDTO;
-import com.nirvana.assignment.entity.BinaryData;
-import com.nirvana.assignment.repository.BinaryDataRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class BinaryDataServiceImplTest {

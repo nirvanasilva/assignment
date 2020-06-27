@@ -1,4 +1,4 @@
-package com.nirvana.assignment.controller;
+package com.nirvana.assignment;
 
 import javax.validation.Valid;
 
@@ -11,17 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nirvana.assignment.dto.BinaryDataDTO;
-import com.nirvana.assignment.entity.BinaryData;
-import com.nirvana.assignment.service.BinaryDataService;
-
 @RestController
 @RequestMapping("/v1/diff")
-public class DiffController {
+public class BinaryDataController {
 	
 	private BinaryDataService service;
 	
-	public DiffController(BinaryDataService service) {
+	public BinaryDataController(BinaryDataService service) {
 		this.service = service;
 	}
 	

@@ -1,4 +1,4 @@
-package com.nirvana.assignment.dto;
+package com.nirvana.assignment;
 
 import javax.validation.constraints.NotEmpty;
 

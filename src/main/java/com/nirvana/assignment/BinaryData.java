@@ -1,4 +1,4 @@
-package com.nirvana.assignment.entity;
+package com.nirvana.assignment;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

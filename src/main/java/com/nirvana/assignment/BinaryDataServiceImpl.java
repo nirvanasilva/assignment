@@ -1,13 +1,9 @@
-package com.nirvana.assignment.service;
+package com.nirvana.assignment;
 
 import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
-import com.nirvana.assignment.dto.BinaryDataDTO;
-import com.nirvana.assignment.entity.BinaryData;
-import com.nirvana.assignment.repository.BinaryDataRepository;
 
 @Service
 public class BinaryDataServiceImpl implements BinaryDataService {

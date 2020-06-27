@@ -1,4 +1,4 @@
-package com.nirvana.assignment.controller;
+package com.nirvana.assignment.integratedtest;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,13 +17,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nirvana.assignment.dto.BinaryDataDTO;
-import com.nirvana.assignment.entity.BinaryData;
-import com.nirvana.assignment.repository.BinaryDataRepository;
+import com.nirvana.assignment.BinaryData;
+import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.BinaryDataRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DiffControllerIT {
+public class BinaryDataIT {
 	
 	private static final String DIFF_LEFT_URL = "/v1/diff/1/left";
 	private static final String DIFF_RIGHT_URL = "/v1/diff/1/right";
