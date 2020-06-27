@@ -1,4 +1,4 @@
-package com.nirvana.assignment;
+package com.nirvana.assignment.common;
 
 public class ErrorMessage {
 	

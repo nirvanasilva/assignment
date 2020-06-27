@@ -1,7 +1,9 @@
 package com.nirvana.assignment.integratedtest;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,16 +21,20 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nirvana.assignment.BinaryData;
 import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.BinaryDataDiffDTO;
 import com.nirvana.assignment.BinaryDataRepository;
+import com.nirvana.assignment.common.ErrorMessage;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class BinaryDataIT {
 	
+	private static final String SAMPLE_DATA = "samplQ==";
+	private static final String SAMPLE_TEST = "test";
+	
+	private static final String DIFF_URL = "/v1/diff/1";
 	private static final String DIFF_LEFT_URL = "/v1/diff/1/left";
 	private static final String DIFF_RIGHT_URL = "/v1/diff/1/right";
-	
-	private static final String SAMPLE_DATA = "samplQ==";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -73,7 +79,7 @@ public class BinaryDataIT {
 		
 		BinaryData savedData = new BinaryData();
 		savedData.setId(1L);
-		savedData.setLeftData(new byte[] { 0, 0, 1 });
+		savedData.setLeftData(Base64.getDecoder().decode(SAMPLE_DATA));
 		repository.save(savedData);
 		
 		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
@@ -156,4 +162,59 @@ public class BinaryDataIT {
 		// TODO: check error message
 	}
 	
+	@Test
+	public void testGetDiffForEqualData() throws Exception {
+		
+		byte[] expectedData = Base64.getDecoder().decode(SAMPLE_DATA);
+
+		BinaryData savedData = new BinaryData();
+		savedData.setId(1L);
+		savedData.setLeftData(expectedData);
+		savedData.setRightData(expectedData);
+		repository.save(savedData);
+		
+		MvcResult result = mockMvc.perform(
+			get(DIFF_URL)
+		).andExpect(status().isOk())
+		.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		BinaryDataDiffDTO response = objectMapper.readValue(content, BinaryDataDiffDTO.class);
+
+		assertArrayEquals(expectedData, response.getData());
+	}
+	
+	@Test
+	public void testGetDiffErrorIfDataDoesNotExist() throws Exception {
+
+		MvcResult result = mockMvc.perform(
+			get(DIFF_URL)
+		).andExpect(status().isBadRequest())
+		.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		ErrorMessage response = objectMapper.readValue(content, ErrorMessage.class);
+
+		assertEquals("Data does not exist", response.getMessage());
+	}
+	
+	@Test
+	public void testGetDiffErrorIfDifferentSize() throws Exception {
+		
+		BinaryData savedData = new BinaryData();
+		savedData.setId(1L);
+		savedData.setLeftData(Base64.getDecoder().decode(SAMPLE_DATA));
+		savedData.setRightData(Base64.getDecoder().decode(SAMPLE_TEST));
+		repository.save(savedData);
+		
+		MvcResult result = mockMvc.perform(
+			get(DIFF_URL)
+		).andExpect(status().isBadRequest())
+		.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		ErrorMessage response = objectMapper.readValue(content, ErrorMessage.class);
+
+		assertEquals("Left and Right data does not have the same size", response.getMessage());
+	}
 }

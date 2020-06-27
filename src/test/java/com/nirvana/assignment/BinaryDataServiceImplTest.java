@@ -104,6 +104,8 @@ public class BinaryDataServiceImplTest {
 			() -> assertArrayEquals(expected.getRightData(), result.getRightData())
 		);
 	}
+	
+	// TODO: Left data does not exist
 
 	private BinaryDataDTO createInputData() {
 		BinaryDataDTO inputData = new BinaryDataDTO();
