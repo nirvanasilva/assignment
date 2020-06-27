@@ -1,16 +1,20 @@
 package com.nirvana.assignment.dto;
 
-import java.util.Arrays;
+import javax.validation.constraints.NotEmpty;
+
+import com.nirvana.assignment.validation.Base64Constraint;
 
 public class BinaryDataDTO {
-	
-	private byte[] data;
-	
-	public byte[] getData() {
+
+	@NotEmpty(message = "data cannot be empty")
+	@Base64Constraint
+	private String data;
+
+	public String getData() {
 		return data;
 	}
-	
-	public void setData(byte[] data) {
+
+	public void setData(String data) {
 		this.data = data;
 	}
 
@@ -18,7 +22,7 @@ public class BinaryDataDTO {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(data);
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		return result;
 	}
 
@@ -31,7 +35,10 @@ public class BinaryDataDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		BinaryDataDTO other = (BinaryDataDTO) obj;
-		if (!Arrays.equals(data, other.data))
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
 			return false;
 		return true;
 	}

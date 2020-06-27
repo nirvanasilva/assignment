@@ -27,7 +27,8 @@ import com.nirvana.assignment.repository.BinaryDataRepository;
 public class BinaryDataServiceImplTest {
 	
 	private static final long SAMPLE_ID = 1L;
-	private static final byte[] SAMPLE_DATA = new byte[] { 0, 0, 1 };
+	private static final String SAMPLE_STRING_DATA = "samplQ==";
+	private static final byte[] SAMPLE_BYTE_DATA = new byte[] { 0, 0, 1 };
 
 	@InjectMocks
 	private BinaryDataServiceImpl service;
@@ -110,15 +111,15 @@ public class BinaryDataServiceImplTest {
 
 	private BinaryDataDTO createInputData() {
 		BinaryDataDTO inputData = new BinaryDataDTO();
-		inputData.setData(SAMPLE_DATA);
+		inputData.setData(SAMPLE_STRING_DATA);
 		return inputData;
 	}
 	
 	private BinaryData createBinaryData() {
 		BinaryData expected = new BinaryData();
 		expected.setId(SAMPLE_ID);
-		expected.setLeftData(SAMPLE_DATA);
-		expected.setRightData(SAMPLE_DATA);
+		expected.setLeftData(SAMPLE_BYTE_DATA);
+		expected.setRightData(SAMPLE_BYTE_DATA);
 		return expected;
 	}
 

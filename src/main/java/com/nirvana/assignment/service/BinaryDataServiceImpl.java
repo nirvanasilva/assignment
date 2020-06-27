@@ -1,5 +1,6 @@
 package com.nirvana.assignment.service;
 
+import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -20,17 +21,17 @@ public class BinaryDataServiceImpl implements BinaryDataService {
 	@Override
 	public BinaryData addLeftData(Long id, BinaryDataDTO inputData) {
 		BinaryData binaryData = findBinaryDataByIdOrCreateNew(id);
-		binaryData.setLeftData(inputData.getData());
+		binaryData.setLeftData(Base64.getDecoder().decode(inputData.getData()));
 		return repository.save(binaryData);
 	}
 
 	@Override
 	public BinaryData addRightData(Long id, BinaryDataDTO inputData) {
 		BinaryData binaryData = findBinaryDataByIdOrCreateNew(id);
-		binaryData.setRightData(inputData.getData());
+		binaryData.setRightData(Base64.getDecoder().decode(inputData.getData()));
 		return repository.save(binaryData);
 	}
-
+	
 	private BinaryData findBinaryDataByIdOrCreateNew(Long id) {
 		BinaryData binaryData;
 		Optional<BinaryData> savedBinaryData = repository.findById(id);

@@ -1,5 +1,7 @@
 package com.nirvana.assignment.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +26,13 @@ public class DiffController {
 	}
 	
 	@PostMapping(path = "/{id}/left", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BinaryData> addLeftData(@PathVariable("id") Long id, @RequestBody BinaryDataDTO binaryDataDTO) {
+	public ResponseEntity<BinaryData> addLeftData(@PathVariable("id") Long id, @RequestBody @Valid BinaryDataDTO binaryDataDTO) {
 		BinaryData binaryData = service.addLeftData(id, binaryDataDTO);
 		return new ResponseEntity<BinaryData>(binaryData, HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/{id}/right", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BinaryData> addRightData(@PathVariable("id") Long id, @RequestBody BinaryDataDTO binaryDataDTO) {
+	public ResponseEntity<BinaryData> addRightData(@PathVariable("id") Long id, @RequestBody @Valid BinaryDataDTO binaryDataDTO) {
 		BinaryData binaryData = service.addRightData(id, binaryDataDTO);
 		return new ResponseEntity<BinaryData>(binaryData, HttpStatus.OK);
 	}

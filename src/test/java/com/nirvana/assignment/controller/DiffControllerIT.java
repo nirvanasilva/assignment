@@ -1,10 +1,11 @@
 package com.nirvana.assignment.controller;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Base64;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class DiffControllerIT {
 	private static final String DIFF_LEFT_URL = "/v1/diff/1/left";
 	private static final String DIFF_RIGHT_URL = "/v1/diff/1/right";
 	
-	private static final byte[] BINARY_DATA = new byte[] { 1, 1, 1 };
+	private static final String SAMPLE_DATA = "samplQ==";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -47,12 +48,14 @@ public class DiffControllerIT {
 	public void testAddLeftData() throws Exception {
 		
 		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
-		binaryDataDTO.setData(BINARY_DATA);
+		binaryDataDTO.setData(SAMPLE_DATA);
+		
+		String input = objectMapper.writeValueAsString(binaryDataDTO);
 		
 		MvcResult result = mockMvc.perform(
 			post(DIFF_LEFT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
-			.content(objectMapper.writeValueAsString(binaryDataDTO))
+			.content(input)
 		).andExpect(status().isOk())
 		.andReturn();
 		
@@ -61,7 +64,7 @@ public class DiffControllerIT {
 
 		assertAll(
 			() -> assertEquals(1L, response.getId()),
-			() -> assertArrayEquals(BINARY_DATA, response.getLeftData())	
+			() -> assertEquals(SAMPLE_DATA, Base64.getEncoder().encodeToString(response.getLeftData()))	
 		);
 	}
 	
@@ -74,7 +77,7 @@ public class DiffControllerIT {
 		repository.save(savedData);
 		
 		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
-		binaryDataDTO.setData(BINARY_DATA);
+		binaryDataDTO.setData(SAMPLE_DATA);
 		
 		MvcResult result = mockMvc.perform(
 			post(DIFF_LEFT_URL)
@@ -88,7 +91,7 @@ public class DiffControllerIT {
 
 		assertAll(
 			() -> assertEquals(1L, response.getId()),
-			() -> assertArrayEquals(BINARY_DATA, response.getLeftData())	
+			() -> assertEquals(SAMPLE_DATA, Base64.getEncoder().encodeToString(response.getLeftData()))	
 		);
 	}
 	
@@ -96,7 +99,7 @@ public class DiffControllerIT {
 	public void testAddRightData() throws Exception {
 		
 		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
-		binaryDataDTO.setData(BINARY_DATA);
+		binaryDataDTO.setData(SAMPLE_DATA);
 		
 		MvcResult result = mockMvc.perform(
 			post(DIFF_RIGHT_URL)
@@ -107,21 +110,50 @@ public class DiffControllerIT {
 		
 		String content = result.getResponse().getContentAsString();
 		BinaryData response = objectMapper.readValue(content, BinaryData.class);
-
+		
 		assertAll(
 			() -> assertEquals(1L, response.getId()),
-			() -> assertArrayEquals(BINARY_DATA, response.getRightData())	
+			() -> assertEquals(SAMPLE_DATA, Base64.getEncoder().encodeToString(response.getRightData()))	
 		);
 	}
 	
 	@Test
-	public void testAddRightDataWithInvalidBody() throws Exception {
+	public void testAddRightDataWithInvalidJsonBody() throws Exception {
 		
 		mockMvc.perform(
 			post(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
-			.content("0010")
+			.content(SAMPLE_DATA)
 		).andExpect(status().isBadRequest());
+		
+		// TODO: check error message
+	}
+	
+	@Test
+	public void testAddRightDataWithInvalidData() throws Exception {
+		
+		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
+		binaryDataDTO.setData("invalid data");
+		
+		mockMvc.perform(
+			post(DIFF_RIGHT_URL)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(objectMapper.writeValueAsString(binaryDataDTO))
+		).andExpect(status().isBadRequest());
+		
+		// TODO: check error message
+	}
+	
+	@Test
+	public void testAddRightDataWithInvalidEmptyData() throws Exception {
+		
+		mockMvc.perform(
+			post(DIFF_RIGHT_URL)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(objectMapper.writeValueAsString(new BinaryDataDTO()))
+		).andExpect(status().isBadRequest());
+		
+		// TODO: check error message
 	}
 	
 }
