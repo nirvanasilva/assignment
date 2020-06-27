@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.dto.BinaryDataDTO;
 import com.nirvana.assignment.entity.BinaryData;
 
 @SpringBootTest

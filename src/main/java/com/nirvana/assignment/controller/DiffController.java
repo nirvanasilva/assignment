@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.dto.BinaryDataDTO;
 import com.nirvana.assignment.entity.BinaryData;
 import com.nirvana.assignment.service.BinaryDataService;
 

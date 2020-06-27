@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.dto.BinaryDataDTO;
 import com.nirvana.assignment.entity.BinaryData;
 import com.nirvana.assignment.repository.BinaryDataRepository;
 

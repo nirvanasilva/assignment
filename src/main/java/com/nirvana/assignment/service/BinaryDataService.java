@@ -1,6 +1,6 @@
 package com.nirvana.assignment.service;
 
-import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.dto.BinaryDataDTO;
 import com.nirvana.assignment.entity.BinaryData;
 
 public interface BinaryDataService {

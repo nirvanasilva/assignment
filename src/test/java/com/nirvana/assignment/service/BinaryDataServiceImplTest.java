@@ -19,7 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.nirvana.assignment.BinaryDataDTO;
+import com.nirvana.assignment.dto.BinaryDataDTO;
 import com.nirvana.assignment.entity.BinaryData;
 import com.nirvana.assignment.repository.BinaryDataRepository;
 
