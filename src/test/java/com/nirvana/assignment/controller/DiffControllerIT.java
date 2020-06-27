@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,10 +18,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nirvana.assignment.dto.BinaryDataDTO;
 import com.nirvana.assignment.entity.BinaryData;
+import com.nirvana.assignment.repository.BinaryDataRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DiffControllerIT {
+	
+	private static final String DIFF_LEFT_URL = "/v1/diff/1/left";
+	private static final String DIFF_RIGHT_URL = "/v1/diff/1/right";
 	
 	private static final byte[] BINARY_DATA = new byte[] { 1, 1, 1 };
 
@@ -30,6 +35,14 @@ public class DiffControllerIT {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
+	@Autowired
+	private BinaryDataRepository repository;
+	
+	@BeforeEach
+	public void setUp() {
+		repository.deleteAll();
+	}
+	
 	@Test
 	public void testAddLeftData() throws Exception {
 		
@@ -37,7 +50,34 @@ public class DiffControllerIT {
 		binaryDataDTO.setData(BINARY_DATA);
 		
 		MvcResult result = mockMvc.perform(
-			post("/v1/diff/1/left")
+			post(DIFF_LEFT_URL)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(objectMapper.writeValueAsString(binaryDataDTO))
+		).andExpect(status().isOk())
+		.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		BinaryData response = objectMapper.readValue(content, BinaryData.class);
+
+		assertAll(
+			() -> assertEquals(1L, response.getId()),
+			() -> assertArrayEquals(BINARY_DATA, response.getLeftData())	
+		);
+	}
+	
+	@Test
+	public void testAddLeftDataUpdateExistingBinaryData() throws Exception {
+		
+		BinaryData savedData = new BinaryData();
+		savedData.setId(1L);
+		savedData.setLeftData(new byte[] { 0, 0, 1 });
+		repository.save(savedData);
+		
+		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
+		binaryDataDTO.setData(BINARY_DATA);
+		
+		MvcResult result = mockMvc.perform(
+			post(DIFF_LEFT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(binaryDataDTO))
 		).andExpect(status().isOk())
@@ -59,7 +99,7 @@ public class DiffControllerIT {
 		binaryDataDTO.setData(BINARY_DATA);
 		
 		MvcResult result = mockMvc.perform(
-			post("/v1/diff/1/right")
+			post(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(binaryDataDTO))
 		).andExpect(status().isOk())
@@ -72,6 +112,16 @@ public class DiffControllerIT {
 			() -> assertEquals(1L, response.getId()),
 			() -> assertArrayEquals(BINARY_DATA, response.getRightData())	
 		);
+	}
+	
+	@Test
+	public void testAddRightDataWithInvalidBody() throws Exception {
+		
+		mockMvc.perform(
+			post(DIFF_RIGHT_URL)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content("0010")
+		).andExpect(status().isBadRequest());
 	}
 	
 }
