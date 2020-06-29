@@ -18,28 +18,30 @@ import com.nirvana.assignment.common.BusinessException;
 @RequestMapping("/v1/diff")
 public class BinaryDataController {
 	
-	private BinaryDataService service;
+	private BinaryDataService binaryDataService;
+	private DiffService diffService;
 	
-	public BinaryDataController(BinaryDataService service) {
-		this.service = service;
+	public BinaryDataController(BinaryDataService binaryDataService, DiffService diffService) {
+		this.binaryDataService = binaryDataService;
+		this.diffService = diffService;
 	}
 	
 	@PostMapping(path = "/{id}/left", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BinaryData> addLeftData(@PathVariable("id") Long id, @RequestBody @Valid BinaryDataDTO binaryDataDTO) {
-		BinaryData binaryData = service.addLeftData(id, binaryDataDTO);
+		BinaryData binaryData = binaryDataService.addLeftData(id, binaryDataDTO);
 		return new ResponseEntity<BinaryData>(binaryData, HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/{id}/right", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BinaryData> addRightData(@PathVariable("id") Long id, @RequestBody @Valid BinaryDataDTO binaryDataDTO) {
-		BinaryData binaryData = service.addRightData(id, binaryDataDTO);
+		BinaryData binaryData = binaryDataService.addRightData(id, binaryDataDTO);
 		return new ResponseEntity<BinaryData>(binaryData, HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BinaryDataDiffDTO> getDiff(@PathVariable("id") Long id) throws BusinessException {
-		BinaryDataDiffDTO diff = service.getDiff(id);
-		return new ResponseEntity<BinaryDataDiffDTO>(diff, HttpStatus.OK);
+	public ResponseEntity<DiffDTO> getDiff(@PathVariable("id") Long id) throws BusinessException {
+		DiffDTO diff = diffService.getDiff(id);
+		return new ResponseEntity<DiffDTO>(diff, HttpStatus.OK);
 	}
 
 }

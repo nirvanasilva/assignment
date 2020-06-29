@@ -1,7 +1,6 @@
 package com.nirvana.assignment.integratedtest;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -21,7 +20,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nirvana.assignment.BinaryData;
 import com.nirvana.assignment.BinaryDataDTO;
-import com.nirvana.assignment.BinaryDataDiffDTO;
+import com.nirvana.assignment.DiffDTO;
 import com.nirvana.assignment.BinaryDataRepository;
 import com.nirvana.assignment.common.ErrorMessage;
 
@@ -179,9 +178,9 @@ public class BinaryDataIT {
 		.andReturn();
 		
 		String content = result.getResponse().getContentAsString();
-		BinaryDataDiffDTO response = objectMapper.readValue(content, BinaryDataDiffDTO.class);
+		DiffDTO response = objectMapper.readValue(content, DiffDTO.class);
 
-		assertArrayEquals(expectedData, response.getData());
+		assertEquals("Data is equal", response.getMessage());
 	}
 	
 	@Test

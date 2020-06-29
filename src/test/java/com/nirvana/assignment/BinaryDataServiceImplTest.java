@@ -105,8 +105,6 @@ public class BinaryDataServiceImplTest {
 		);
 	}
 	
-	// TODO: Left data does not exist
-
 	private BinaryDataDTO createInputData() {
 		BinaryDataDTO inputData = new BinaryDataDTO();
 		inputData.setData(SAMPLE_STRING_DATA);
