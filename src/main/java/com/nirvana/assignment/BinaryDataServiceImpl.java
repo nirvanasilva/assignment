@@ -14,6 +14,11 @@ public class BinaryDataServiceImpl implements BinaryDataService {
 		this.repository = repository;
 	}
 
+	/**
+	 * Add left data to a binary data object with a given ID.
+	 * If the object does not exist in the database yet, the object is created. 
+	 * If the object already exists, left data attribute is updated.
+	 */
 	@Override
 	public BinaryData addLeftData(Long id, BinaryDataDTO inputData) {
 		BinaryData binaryData = findBinaryDataByIdOrCreateNew(id);
@@ -21,6 +26,11 @@ public class BinaryDataServiceImpl implements BinaryDataService {
 		return repository.save(binaryData);
 	}
 
+	/**
+	 * Add right data to a binary data object with a given ID.
+	 * If the object does not exist in the database yet, the object is created. 
+	 * If the object already exists, right data attribute is updated.
+	 */
 	@Override
 	public BinaryData addRightData(Long id, BinaryDataDTO inputData) {
 		BinaryData binaryData = findBinaryDataByIdOrCreateNew(id);

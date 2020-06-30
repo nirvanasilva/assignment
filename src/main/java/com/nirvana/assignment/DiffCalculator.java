@@ -7,6 +7,13 @@ public final class DiffCalculator {
 	
 	private DiffCalculator() {}
 	
+	/**
+	 * Given two arrays of bytes, creates a Map with offsets and lengths. 
+	 * Key is the offset and Value is the length.
+	 * @param left
+	 * @param right
+	 * @return map with offsets and lengths
+	 */
 	public static Map<Integer, Integer> generateDiffMap(byte[] left, byte[] right) {
 		if(left.length != right.length) return new HashMap<Integer, Integer>();
 		

@@ -68,4 +68,5 @@ To run the tests:
 * Add logs so the application can be monitored
 * Add swagger for API documentation
 * Create script for CI/CD pipeline
+* Use properties to define application messages
 
