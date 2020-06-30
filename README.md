@@ -17,9 +17,6 @@ The results shall provide the following info in JSON format
  * If of same size provide insight in where the diffs are, actual diffs are not needed.
 	 * So mainly offsets + length in the data
 
-## Solution
-TBD
-
 ## Requirements
 * Java 8
 
@@ -31,7 +28,7 @@ In the terminal, use the following command:
 
 Application will be available at: `http://localhost:8080/`
 
-### Use
+### Usage
 1. Add left and right data to be diff-ed
 * Endpoints:  
 	* POST `http://localhost:8080/v1/diff/<ID>/left` or `http://localhost:8080/v1/diff/<ID>/right` 
@@ -50,8 +47,25 @@ Sample payload:
 
 2. Get diff between left and right data by making a GET request to `http://localhost:8080/v1/diff/<ID>`. **\<ID\>** is a number identifying the data to be diff-ed.
 
+* If data is different, you will get a response with details about offset and length. See example below for a diff between `samplQ==` and `senplQ==`:
+
+		{ 
+		   "message": "Data is not equal. Check diff details.",
+		   "diff": [
+			  {  
+				"offset": 1,
+				"length": 2
+			  }
+		    ]
+	     }
+
 ## Tests
 To run the tests:
 
     mvn clean test
+
+## Improvements
+* Add logs so the application can be monitored
+* Add swagger for API documentation
+* Create script for CI/CD pipeline
 
