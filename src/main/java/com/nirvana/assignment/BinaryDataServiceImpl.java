@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BinaryDataServiceImpl implements BinaryDataService {
 	
-	// TODO: add logs
-	// TODO: add documentation
-	
 	private BinaryDataRepository repository;
 	
 	public BinaryDataServiceImpl(BinaryDataRepository repository) {

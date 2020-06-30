@@ -130,8 +130,6 @@ public class BinaryDataIT {
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(SAMPLE_DATA)
 		).andExpect(status().isBadRequest());
-		
-		// TODO: check error message
 	}
 	
 	@Test
@@ -140,25 +138,33 @@ public class BinaryDataIT {
 		BinaryDataDTO binaryDataDTO = new BinaryDataDTO();
 		binaryDataDTO.setData("invalid data");
 		
-		mockMvc.perform(
+		MvcResult result = mockMvc.perform(
 			post(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(binaryDataDTO))
-		).andExpect(status().isBadRequest());
+		).andExpect(status().isBadRequest())
+		.andReturn();
 		
-		// TODO: check error message
+		String content = result.getResponse().getContentAsString();
+		ErrorMessage response = objectMapper.readValue(content, ErrorMessage.class);
+
+		assertEquals("Data is not Base64 encoded", response.getMessage());
 	}
 	
 	@Test
 	public void testAddRightDataWithInvalidEmptyData() throws Exception {
 		
-		mockMvc.perform(
+		MvcResult result = mockMvc.perform(
 			post(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(new BinaryDataDTO()))
-		).andExpect(status().isBadRequest());
+		).andExpect(status().isBadRequest())
+		.andReturn();
 		
-		// TODO: check error message
+		String content = result.getResponse().getContentAsString();
+		ErrorMessage response = objectMapper.readValue(content, ErrorMessage.class);
+
+		assertEquals("data cannot be empty", response.getMessage());
 	}
 	
 	@Test
