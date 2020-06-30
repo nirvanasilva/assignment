@@ -2,6 +2,10 @@ package com.nirvana.assignment;
 
 import java.util.List;
 
+/**
+ * Output DTO for diffs.
+ * 
+ */
 public class DiffDTO {
 
 	private String message;

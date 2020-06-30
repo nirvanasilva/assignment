@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import com.nirvana.assignment.validation.Base64Constraint;
 
 /**
- * Input data for left / right endpoints.
+ * Input data for left / right end points.
  * Data is validated by checking if it's a valid Base64 encoded string.
  */
 public class BinaryDataDTO {
