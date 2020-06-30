@@ -71,4 +71,5 @@ To run the tests:
 * Add logs so the application can be monitored
 * Create script for CI/CD pipeline
 * Use properties file to define application messages
+* Improve swagger API Documentation
 
