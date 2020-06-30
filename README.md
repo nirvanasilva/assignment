@@ -28,6 +28,9 @@ In the terminal, use the following command:
 
 Application will be available at: `http://localhost:8080/`
 
+### API Documentation
+Swagger documentation: `http://localhost:8080/swagger-ui.html`
+
 ### Usage
 1. Add left and right data to be diff-ed
 * Endpoints:  
@@ -66,7 +69,6 @@ To run the tests:
 
 ## Improvements
 * Add logs so the application can be monitored
-* Add swagger for API documentation
 * Create script for CI/CD pipeline
-* Use properties to define application messages
+* Use properties file to define application messages
 
