@@ -3,7 +3,7 @@ package com.nirvana.assignment.integratedtest;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Base64;
@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nirvana.assignment.BinaryData;
 import com.nirvana.assignment.BinaryDataDTO;
 import com.nirvana.assignment.DiffDTO;
-import com.nirvana.assignment.BinaryDataRepository;
 import com.nirvana.assignment.common.ErrorMessage;
+import com.nirvana.assignment.BinaryDataRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -58,7 +58,7 @@ public class BinaryDataIT {
 		String input = objectMapper.writeValueAsString(binaryDataDTO);
 		
 		MvcResult result = mockMvc.perform(
-			post(DIFF_LEFT_URL)
+			put(DIFF_LEFT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(input)
 		).andExpect(status().isOk())
@@ -85,7 +85,7 @@ public class BinaryDataIT {
 		binaryDataDTO.setData(SAMPLE_DATA);
 		
 		MvcResult result = mockMvc.perform(
-			post(DIFF_LEFT_URL)
+			put(DIFF_LEFT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(binaryDataDTO))
 		).andExpect(status().isOk())
@@ -107,7 +107,7 @@ public class BinaryDataIT {
 		binaryDataDTO.setData(SAMPLE_DATA);
 		
 		MvcResult result = mockMvc.perform(
-			post(DIFF_RIGHT_URL)
+			put(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(binaryDataDTO))
 		).andExpect(status().isOk())
@@ -126,7 +126,7 @@ public class BinaryDataIT {
 	public void testAddRightDataWithInvalidJsonBody() throws Exception {
 		
 		mockMvc.perform(
-			post(DIFF_RIGHT_URL)
+			put(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(SAMPLE_DATA)
 		).andExpect(status().isBadRequest());
@@ -139,7 +139,7 @@ public class BinaryDataIT {
 		binaryDataDTO.setData("invalid data");
 		
 		MvcResult result = mockMvc.perform(
-			post(DIFF_RIGHT_URL)
+			put(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(binaryDataDTO))
 		).andExpect(status().isBadRequest())
@@ -155,7 +155,7 @@ public class BinaryDataIT {
 	public void testAddRightDataWithInvalidEmptyData() throws Exception {
 		
 		MvcResult result = mockMvc.perform(
-			post(DIFF_RIGHT_URL)
+			put(DIFF_RIGHT_URL)
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(new BinaryDataDTO()))
 		).andExpect(status().isBadRequest())

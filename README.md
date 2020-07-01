@@ -34,7 +34,7 @@ Swagger documentation: `http://localhost:8080/swagger-ui.html`
 ### Usage
 1. Add left and right data to be diff-ed
 * Endpoints:  
-	* POST `http://localhost:8080/v1/diff/<ID>/left` or `http://localhost:8080/v1/diff/<ID>/right` 
+	* PUT `http://localhost:8080/v1/diff/<ID>/left` or `http://localhost:8080/v1/diff/<ID>/right` 
 * Header:
 	* Content-Type: application/json
 * Parameter

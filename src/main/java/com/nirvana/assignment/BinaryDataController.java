@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,13 +26,13 @@ public class BinaryDataController {
 		this.diffService = diffService;
 	}
 	
-	@PostMapping(path = "/{id}/left", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{id}/left", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BinaryData> addLeftData(@PathVariable("id") Long id, @RequestBody @Valid BinaryDataDTO binaryDataDTO) {
 		BinaryData binaryData = binaryDataService.addLeftData(id, binaryDataDTO);
 		return new ResponseEntity<BinaryData>(binaryData, HttpStatus.OK);
 	}
 	
-	@PostMapping(path = "/{id}/right", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{id}/right", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BinaryData> addRightData(@PathVariable("id") Long id, @RequestBody @Valid BinaryDataDTO binaryDataDTO) {
 		BinaryData binaryData = binaryDataService.addRightData(id, binaryDataDTO);
 		return new ResponseEntity<BinaryData>(binaryData, HttpStatus.OK);
