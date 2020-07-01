@@ -5,6 +5,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * Service to basic operations on BinaryData entity.
+ * It can add left and right data to the entity.
+ * If entity does not exist, it is created a new instance with the given id and data.
+ */
 @Service
 public class BinaryDataServiceImpl implements BinaryDataService {
 	

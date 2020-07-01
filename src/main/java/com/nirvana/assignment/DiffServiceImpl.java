@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * This service handles diff operations over a BinaryData.
+ * Diff is calculated only if left and right data have the same length.
+ */
 @Service
 public class DiffServiceImpl implements DiffService {
 	

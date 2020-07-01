@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for diff operations.
+ * It can add left / right data and calculate the diff between them.
+ */
 @RestController
 @RequestMapping("/v1/diff")
 public class BinaryDataController {
