@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nirvana.assignment.BinaryData;
 import com.nirvana.assignment.BinaryDataDTO;
 import com.nirvana.assignment.DiffDTO;
-import com.nirvana.assignment.common.ErrorMessage;
+import com.nirvana.assignment.ErrorMessage;
 import com.nirvana.assignment.BinaryDataRepository;
 
 @SpringBootTest
@@ -214,11 +214,11 @@ public class BinaryDataIT {
 		
 		MvcResult result = mockMvc.perform(
 			get(DIFF_URL)
-		).andExpect(status().isBadRequest())
+		).andExpect(status().isOk())
 		.andReturn();
 		
 		String content = result.getResponse().getContentAsString();
-		ErrorMessage response = objectMapper.readValue(content, ErrorMessage.class);
+		DiffDTO response = objectMapper.readValue(content, DiffDTO.class);
 
 		assertEquals("Left and Right data does not have the same size", response.getMessage());
 	}

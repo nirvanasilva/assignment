@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import com.nirvana.assignment.common.BusinessException;
-import com.nirvana.assignment.common.ErrorMessage;
-
 @RestControllerAdvice
 public class BinaryDataExceptionHandler {
 
@@ -19,8 +16,8 @@ public class BinaryDataExceptionHandler {
 		return new ResponseEntity<ErrorMessage>(createSingleErrorMessage(ex), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(BusinessException.class)
-	public ResponseEntity<ErrorMessage> handleBusinessExceptionException(BusinessException ex, WebRequest request) {
+	@ExceptionHandler(BinaryDataException.class)
+	public ResponseEntity<ErrorMessage> handleBusinessExceptionException(BinaryDataException ex, WebRequest request) {
 		return new ResponseEntity<ErrorMessage>(createSingleErrorMessage(ex), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 	
@@ -30,7 +27,7 @@ public class BinaryDataExceptionHandler {
 		return errorMessage;
 	}
 	
-	private ErrorMessage createSingleErrorMessage(BusinessException exception) {
+	private ErrorMessage createSingleErrorMessage(BinaryDataException exception) {
 		ErrorMessage errorMessage = new ErrorMessage();
 		errorMessage.setMessage(exception.getMessage());
 		return errorMessage;

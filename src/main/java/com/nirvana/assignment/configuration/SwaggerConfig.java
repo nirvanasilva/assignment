@@ -1,4 +1,4 @@
-package com.nirvana.assignment;
+package com.nirvana.assignment.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

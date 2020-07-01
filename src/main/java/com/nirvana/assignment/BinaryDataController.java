@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nirvana.assignment.common.BusinessException;
-
 @RestController
 @RequestMapping("/v1/diff")
 public class BinaryDataController {
@@ -39,7 +37,7 @@ public class BinaryDataController {
 	}
 	
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<DiffDTO> getDiff(@PathVariable("id") Long id) throws BusinessException {
+	public ResponseEntity<DiffDTO> getDiff(@PathVariable("id") Long id) throws BinaryDataException {
 		DiffDTO diff = diffService.getDiff(id);
 		return new ResponseEntity<DiffDTO>(diff, HttpStatus.OK);
 	}

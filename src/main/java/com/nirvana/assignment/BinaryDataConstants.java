@@ -1,6 +1,6 @@
-package com.nirvana.assignment.common;
+package com.nirvana.assignment;
 
-public final class AppConstants {
+public final class BinaryDataConstants {
 	
 	public static final String MESSAGE_DATA_DOES_NOT_EXIST = "Data does not exist";
 	public static final String MESSAGE_INVALID_LEFT_RIGHT_DATA = "Invalid left / right data";
@@ -8,7 +8,7 @@ public final class AppConstants {
 	public static final String MESSAGE_DATA_IS_EQUAL = "Data is equal";
 	public static final String MESSAGE_DATA_IS_NOT_EQUAL = "Data is not equal. Check diff details.";
 	
-	private AppConstants() {
+	private BinaryDataConstants() {
 		
 	}
 

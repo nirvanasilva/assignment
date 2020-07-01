@@ -17,8 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.nirvana.assignment.common.BusinessException;
-
 @ExtendWith(MockitoExtension.class)
 public class DiffServiceImplTest {
 	
@@ -42,7 +40,7 @@ public class DiffServiceImplTest {
 	}
 
 	@Test
-	public void shouldGetDiffForEqualData() throws BusinessException {
+	public void shouldGetDiffForEqualData() throws BinaryDataException {
 		
 		binaryData.setLeftData(SAMPLE_BYTE_DATA);
 		binaryData.setRightData(SAMPLE_BYTE_DATA);
@@ -59,54 +57,58 @@ public class DiffServiceImplTest {
 	}
 	
 	@Test
-	public void shouldGetDiffExceptionIfLeftDataIsNull() throws BusinessException {
+	public void shouldGetDiffExceptionIfLeftDataIsNull() throws BinaryDataException {
 		
 		binaryData.setRightData(SAMPLE_BYTE_DATA);
 		
 		when(mockRepository.findById(anyLong())).thenReturn(Optional.of(binaryData));
 		
-		assertThrows(BusinessException.class, () -> {
+		assertThrows(BinaryDataException.class, () -> {
 			service.getDiff(SAMPLE_ID);
 		});
 	}
 	
 	@Test
-	public void shouldGetDiffExceptionIfRightDataIsNull() throws BusinessException {
+	public void shouldGetDiffExceptionIfRightDataIsNull() throws BinaryDataException {
 		
 		binaryData.setLeftData(SAMPLE_BYTE_DATA);
 		
 		when(mockRepository.findById(anyLong())).thenReturn(Optional.of(binaryData));
 		
-		assertThrows(BusinessException.class, () -> {
+		assertThrows(BinaryDataException.class, () -> {
 			service.getDiff(SAMPLE_ID);
 		});
 	}
 	
 	@Test
-	public void shouldGetDiffExceptionIfResourceNotFound() throws BusinessException {
+	public void shouldGetDiffExceptionIfResourceNotFound() throws BinaryDataException {
 		
 		when(mockRepository.findById(anyLong())).thenReturn(Optional.empty());
 		
-		assertThrows(BusinessException.class, () -> {
+		assertThrows(BinaryDataException.class, () -> {
 			service.getDiff(SAMPLE_ID);
 		});
 	}
 	
 	@Test
-	public void shouldGetDiffExceptionIfSizeNotEqual() throws BusinessException {
+	public void shouldGetDiffExceptionIfSizeNotEqual() throws BinaryDataException {
 		
 		binaryData.setLeftData(SAMPLE_BYTE_DATA);
 		binaryData.setRightData(BIGGER_SAMPLE_BYTE_DATA);
 		
 		when(mockRepository.findById(anyLong())).thenReturn(Optional.of(binaryData));
 		
-		assertThrows(BusinessException.class, () -> {
-			service.getDiff(SAMPLE_ID);
-		});
+		DiffDTO diffDTO = service.getDiff(SAMPLE_ID);
+		
+		assertAll(
+			() -> assertNotNull(diffDTO),
+			() -> assertEquals("Left and Right data does not have the same size", diffDTO.getMessage()),
+			() -> assertNull(diffDTO.getDiff())
+		);
 	}
 	
 	@Test
-	public void shouldGetDiffForSameSizeData() throws BusinessException {
+	public void shouldGetDiffForSameSizeData() throws BinaryDataException {
 		
 		binaryData.setLeftData(SAMPLE_BYTE_DATA);
 		binaryData.setRightData(DIFF_SAMPLE_BYTE_DATA);

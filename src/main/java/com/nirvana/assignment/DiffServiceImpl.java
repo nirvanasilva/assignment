@@ -8,9 +8,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.nirvana.assignment.common.AppConstants;
-import com.nirvana.assignment.common.BusinessException;
-
 @Service
 public class DiffServiceImpl implements DiffService {
 	
@@ -21,11 +18,11 @@ public class DiffServiceImpl implements DiffService {
 	}
 
 	@Override
-	public DiffDTO getDiff(Long id) throws BusinessException {
+	public DiffDTO getDiff(Long id) throws BinaryDataException {
 		
 		Optional<BinaryData> savedBinaryData = repository.findById(id);
 		if(!savedBinaryData.isPresent()) {
-			throw new BusinessException(AppConstants.MESSAGE_DATA_DOES_NOT_EXIST);
+			throw new BinaryDataException(BinaryDataConstants.MESSAGE_DATA_DOES_NOT_EXIST);
 		}
 		
 		BinaryData data = savedBinaryData.get();
@@ -35,13 +32,13 @@ public class DiffServiceImpl implements DiffService {
 		byte[] right = data.getRightData();
 		
 		if(left == null || right == null) {
-			throw new BusinessException(AppConstants.MESSAGE_INVALID_LEFT_RIGHT_DATA);
+			throw new BinaryDataException(BinaryDataConstants.MESSAGE_INVALID_LEFT_RIGHT_DATA);
 		} else if(data.getLeftData().length != data.getRightData().length) {
-			throw new BusinessException(AppConstants.MESSAGE_NOT_SAME_SIZE);
+			responseData.setMessage(BinaryDataConstants.MESSAGE_NOT_SAME_SIZE);
 		} else if(Arrays.equals(data.getLeftData(), data.getRightData())) {
-			responseData.setMessage(AppConstants.MESSAGE_DATA_IS_EQUAL);
+			responseData.setMessage(BinaryDataConstants.MESSAGE_DATA_IS_EQUAL);
 		} else {
-			responseData.setMessage(AppConstants.MESSAGE_DATA_IS_NOT_EQUAL);
+			responseData.setMessage(BinaryDataConstants.MESSAGE_DATA_IS_NOT_EQUAL);
 			responseData.setDiff(createDiffDetails(left, right));
 		}
 		
