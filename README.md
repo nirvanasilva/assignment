@@ -28,9 +28,6 @@ In the terminal, use the following command:
 
 Application will be available at: `http://localhost:8080/`
 
-### API Documentation
-Swagger documentation: `http://localhost:8080/swagger-ui.html`
-
 ### Usage
 1. Add left and right data to be diff-ed
 * Endpoints:  
@@ -66,6 +63,13 @@ Sample payload:
 To run the tests:
 
     mvn clean test
+
+### API Documentation
+Swagger documentation: `http://localhost:8080/swagger-ui.html`
+
+### Monitoring
+
+Health: `http://localhost:8080/actuator/health`
 
 ## Improvements
 * Add logs so the application can be monitored
